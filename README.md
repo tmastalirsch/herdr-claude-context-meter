@@ -3,15 +3,13 @@
 A [herdr](https://herdr.dev) plugin that shows Claude Code's context usage as a bar —
 per session in the status line, and for all sessions at once in a herdr pane.
 
-*[Deutsche Version](README.de.md)*
-
 ```
 Claude Context · 4 Agents · alle 5s
 
-w4:p1  ◑ AEM Agent pilot branch    ██████░░░░  68% (57%)  575k/1.0M
-w5:p2  ◑ Claude context Herdr-Pl…  ██░░░░░░░░  20% (17%)  172k/1.0M
-w2:p1  ✳ herdr plugin session re…  █░░░░░░░░░  17% (14%)  143k/1.0M
-w5:p1  ✳ Slack-Status automatisc…  ░░░░░░░░░░   7% ( 6%)   67k/1.0M
+w1:p1  ◑ api refactor              ██████░░░░  68% (57%)  570k/1.0M
+w2:p1  ◑ flaky test hunt           ██░░░░░░░░  20% (17%)  172k/1.0M
+w2:p2  ✳ changelog for 2.4         █░░░░░░░░░  17% (14%)  143k/1.0M
+w3:p1  ✳ docs cleanup              ░░░░░░░░░░   7% ( 6%)   62k/1.0M
 ```
 
 In the status line:
