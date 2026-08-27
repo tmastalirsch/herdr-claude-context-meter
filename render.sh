@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Reine Renderlogik: kein herdr, kein Dateisystem, keine Seiteneffekte -> testbar.
-# Farb- und Balkenkonventionen folgen der get-shit-done-Statusline.
+# Pure rendering logic: no herdr, no filesystem, no side effects — hence testable.
+# Bar and color conventions follow the get-shit-done status line.
 
 # compute_pct <remaining_percentage> <total_tokens> [auto_compact_tokens]
-# Gibt "<nutzbar> <roh>" aus. Roh = 100 - remaining (= was /context zeigt).
-# Nutzbar rechnet den Auto-Compact-Puffer heraus: 100 % = /compact schlägt zu.
+# Prints "<usable> <raw>". Raw = 100 - remaining (what /context reports).
+# Usable factors out the auto-compact buffer: 100% means /compact is about to fire.
 compute_pct() {
   local remaining="$1" total="$2" acw="${3:-0}"
   [[ "$remaining" =~ ^[0-9]+(\.[0-9]+)?$ ]] || return 1
@@ -23,7 +23,7 @@ compute_pct() {
   }'
 }
 
-# render_bar <nutzbar> [breite]
+# render_bar <usable> [width]
 render_bar() {
   local pct="$1" width="${2:-10}" filled i out=""
   filled=$(( pct * width / 100 ))
@@ -35,14 +35,14 @@ render_bar() {
   printf '%s' "$out"
 }
 
-# render_label <nutzbar> <roh> [show_raw]  — feste Breite, damit Spalten fluchten
+# render_label <usable> <raw> [show_raw] — fixed width so columns line up
 render_label() {
   local u="$1" raw="$2" show="${3:-1}"
   if [[ "$show" == 1 ]]; then printf '%3d%% (%2d%%)' "$u" "$raw"
   else printf '%3d%%' "$u"; fi
 }
 
-# color_for <nutzbar> — GSD-Schwellen: <50 grün, <65 gelb, <80 orange, sonst blinkend rot
+# color_for <usable> — thresholds: <50 green, <65 yellow, <80 orange, else blinking red
 color_for() {
   local u="$1"
   if   (( u < 50 )); then printf '\033[32m'
@@ -52,10 +52,10 @@ color_for() {
   fi
 }
 
-# glyph_for <nutzbar>
+# glyph_for <usable>
 glyph_for() { (( ${1:-0} >= 80 )) && printf '💀'; return 0; }
 
-# render_meter <nutzbar> <roh> [breite] [show_raw] [color]
+# render_meter <usable> <raw> [width] [show_raw] [color]
 render_meter() {
   local u="$1" raw="$2" width="${3:-10}" show="${4:-1}" color="${5:-1}" out g
   out="$(render_bar "$u" "$width") $(render_label "$u" "$raw" "$show")"

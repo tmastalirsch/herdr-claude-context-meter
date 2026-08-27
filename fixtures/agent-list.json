@@ -1,7 +1,7 @@
 {"id":"cli:agent:list","result":{"type":"agent_list","agents":[
 {"agent":"claude","agent_session":{"kind":"id","value":"sid-a"},"agent_status":"idle","pane_id":"w2:p1","terminal_title":"✳ herdr plugin session","terminal_title_stripped":"herdr plugin session","workspace_id":"w2"},
-{"agent":"claude","agent_session":{"kind":"id","value":"sid-b"},"agent_status":"working","pane_id":"w4:p1","terminal_title":"◑ AEM Agent pilot","terminal_title_stripped":"AEM Agent pilot","workspace_id":"w4"},
-{"agent":"claude","agent_session":{"kind":"id","value":"sid-c"},"agent_status":"idle","pane_id":"w5:p1","terminal_title":"✳ Slack-Status setzen","terminal_title_stripped":"Slack-Status setzen","workspace_id":"w5"},
-{"agent":"claude","agent_session":{"kind":"id","value":"sid-d"},"agent_status":"working","pane_id":"w5:p2","terminal_title":"◑ Claude context Herdr-Plugin","terminal_title_stripped":"Claude context Herdr-Plugin","workspace_id":"w5"},
+{"agent":"claude","agent_session":{"kind":"id","value":"sid-b"},"agent_status":"working","pane_id":"w4:p1","terminal_title":"◑ release checklist","terminal_title_stripped":"release checklist","workspace_id":"w4"},
+{"agent":"claude","agent_session":{"kind":"id","value":"sid-c"},"agent_status":"idle","pane_id":"w5:p1","terminal_title":"✳ changelog for 2.4","terminal_title_stripped":"changelog for 2.4","workspace_id":"w5"},
+{"agent":"claude","agent_session":{"kind":"id","value":"sid-d"},"agent_status":"working","pane_id":"w5:p2","terminal_title":"◑ context meter rewrite work","terminal_title_stripped":"context meter rewrite work","workspace_id":"w5"},
 {"agent":"codex","agent_session":{"kind":"id","value":"sid-x"},"agent_status":"idle","pane_id":"w6:p1","terminal_title":"codex","terminal_title_stripped":"codex","workspace_id":"w6"}
 ]}}

@@ -2,7 +2,7 @@ id = "tlv.claude-context-meter"
 name = "Claude Context Meter"
 version = "0.1.0"
 min_herdr_version = "0.8.2"
-description = "Kontextauslastung aller Claude-Code-Panes als Balken — in der Statusline und in einem herdr-Pane"
+description = "Claude Code context usage as a bar — in the status line and in a herdr pane"
 platforms = ["macos", "linux"]
 
 [[panes]]
@@ -13,6 +13,6 @@ command = ["bash", "meter-pane.sh"]
 
 [[actions]]
 id = "open"
-title = "Kontext-Meter öffnen"
+title = "Open context meter"
 contexts = ["workspace"]
 command = ["bash", "open-pane.sh"]

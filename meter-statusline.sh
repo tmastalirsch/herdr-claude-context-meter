@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Claude-Code-Statusline: rendert den Kontext-Balken und legt den Wert für das
-# herdr-Pane ab. Verkettbar — mit Argumenten wird deren Ausgabe vorangestellt:
-#   meter-statusline.sh                      -> "Opus  ~/projekt  ███░░░ 31% (26%)"
-#   meter-statusline.sh my-statusline.sh     -> "<deren Ausgabe>  ███░░░ 31% (26%)"
+# Claude Code status line: renders the context bar and records the value for the herdr
+# pane. Chainable — with arguments, their output is prepended:
+#   meter-statusline.sh                      -> "Opus  ~/project  ███░░░ 31% (26%)"
+#   meter-statusline.sh my-statusline.sh     -> "<its output>  ███░░░ 31% (26%)"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$HERE/render.sh" 2>/dev/null || exit 0
 
@@ -16,7 +16,7 @@ STATE_DIR="${CLAUDE_CONTEXT_METER_DIR:-$HOME/.local/state/claude-context-meter}/
 input="$(cat)"
 [[ -n "$input" ]] || exit 0
 
-# Ein einziger Python-Aufruf, sechs Zeilen: sid, modell, dir, remaining%, fenster, tokens
+# One Python call, six lines: sid, model, dir, remaining%, window, tokens
 parsed="$(printf '%s' "$input" | python3 -c '
 import json, sys
 try:
@@ -43,7 +43,7 @@ print("\n".join(str(v) for v in out))
 [[ -n "$parsed" ]] || exit 0
 { read -r SID; read -r MODEL; read -r DIRP; read -r REM; read -r WINDOW; read -r USED_TOK; } <<< "$parsed"
 
-# Kopf: Fremdausgabe (verkettet) oder Modell + Verzeichnis
+# Head: chained command's output, or model + directory
 if (( $# > 0 )); then
   head="$(printf '%s' "$input" | "$@" 2>/dev/null)"
 else
@@ -52,7 +52,7 @@ else
   if [[ "$SHOW_DIR" == 1 && -n "$DIRP" ]]; then head="$head  ${DIRP/#$HOME/$tilde}"; fi
 fi
 
-# JSON-Stringwerte entschärfen, damit die State-Datei gültig bleibt
+# Defuse JSON string values so the state file stays valid
 sanitize() { printf '%s' "${1//[\"\\]/}" | tr -d '\000-\037'; }
 
 meter=""
@@ -62,7 +62,7 @@ if pct="$(compute_pct "$REM" "$WINDOW" "${CLAUDE_CODE_AUTO_COMPACT_WINDOW:-0}")"
   if [[ "$SHOW_TOKENS" == 1 && -n "$USED_TOK" && "$USED_TOK" != 0 ]]; then
     meter="$meter  $(fmt_tokens "$USED_TOK")/$(fmt_tokens "$WINDOW")"
   fi
-  # State für das Pane — nur bei unbedenklicher Session-ID (kein Pfad-Traversal)
+  # State for the pane — only for a harmless session ID (no path traversal)
   if [[ "$SID" =~ ^[A-Za-z0-9._-]+$ && "$SID" != *..* ]] && mkdir -p "$STATE_DIR" 2>/dev/null; then
     f="$STATE_DIR/$SID.json"
     if printf '{"session_id":"%s","usable":%d,"raw":%d,"used_tokens":%d,"window":%d,"model":"%s","dir":"%s","ts":%d}\n' \

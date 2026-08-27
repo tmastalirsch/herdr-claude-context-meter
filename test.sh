@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Führt alle Suiten aus.
+# Runs every suite.
 cd "$(dirname "$0")"
 fail=0
 for s in test-render.sh test-statusline.sh test-pane.sh; do
@@ -7,5 +7,5 @@ for s in test-render.sh test-statusline.sh test-pane.sh; do
   bash "$s" || fail=1
   echo
 done
-if (( fail )); then echo "═══ FEHLGESCHLAGEN"; else echo "═══ alles grün"; fi
+if (( fail )); then echo "═══ FAILED"; else echo "═══ all green"; fi
 exit $fail

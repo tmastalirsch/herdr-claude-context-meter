@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-# Öffnet das Meter-Pane. Als herdr-Action verfügbar, damit ein Keybinding darauf zeigen kann.
+# Opens the meter pane. Exposed as a herdr action so a key binding can point at it.
 exec "${HERDR_BIN_PATH:-herdr}" plugin pane open \
   --plugin "${HERDR_PLUGIN_ID:-tlv.claude-context-meter}" --entrypoint meter

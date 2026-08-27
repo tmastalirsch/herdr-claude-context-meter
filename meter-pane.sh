@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# herdr-Pane: eine Balkenzeile pro Claude-Agent, live aktualisiert.
-#   meter-pane.sh          Endlosschleife mit Bildschirmneuaufbau (Pane-Entrypoint)
-#   meter-pane.sh --once   ein einzelner Frame auf stdout (testbar)
+# herdr pane: one bar row per Claude agent, refreshed live.
+#   meter-pane.sh          endless loop with screen redraw (pane entry point)
+#   meter-pane.sh --once   a single frame on stdout (testable)
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$HERE/render.sh" || exit 1
 
@@ -21,8 +21,8 @@ load_conf() {
   SORT="${METER_SORT:-used}"
 }
 
-# Verbindet agent list mit den State-Dateien und sortiert. Datenkleber, keine Optik.
-# Ausgabe je Agent, tabgetrennt: pane status titel has_data usable raw tokens window stale
+# Joins agent list with the state files and sorts. Data plumbing, no presentation.
+# One tab-separated line per agent: pane status title has_data usable raw tokens window stale
 collect() {
   local json
   json="$($AGENT_LIST_CMD 2>/dev/null)" || return 1
@@ -126,10 +126,10 @@ load_conf
 if [[ "${1:-}" == "--once" ]]; then render_frame; exit 0; fi
 
 trap 'printf "\033[?25h"; exit 0' INT TERM
-printf '\033[?25l'                        # Cursor aus, solange das Pane läuft
+printf '\033[?25l'                        # hide the cursor while the pane runs
 while :; do
   load_conf
   frame="$(render_frame)"
-  printf '\033[H\033[2J%s' "$frame"       # an den Anfang, löschen, neu zeichnen
+  printf '\033[H\033[2J%s' "$frame"       # home, clear, redraw
   sleep "$INTERVAL"
 done
