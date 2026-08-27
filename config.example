@@ -1,0 +1,11 @@
+# Kopie nach: $(herdr plugin config-dir tlv.claude-context-meter)/config
+# Greift beim nächsten Tick des Panes, kein Neustart nötig.
+
+METER_INTERVAL=5        # Sekunden zwischen Neuaufbauten des Panes
+METER_WIDTH=10          # Segmente des Balkens
+METER_TITLE_WIDTH=24    # Spaltenbreite für den Pane-Titel (länger wird mit … gekürzt)
+METER_SHOW_RAW=1        # rohen Prozentwert (= /context) in Klammern anzeigen
+METER_SHOW_TOKENS=1     # "440k/1.0M" hinter dem Balken (Pane-Standard 1, Statusline 0)
+METER_SORT=used         # used = Auslastung absteigend | pane = nach Pane-ID
+METER_STALE=180         # Werte älter als N Sekunden mit ⧗ markieren
+METER_COLOR=1           # ANSI-Farben nach GSD-Schwellen
