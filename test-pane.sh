@@ -25,14 +25,14 @@ t() { if [[ "$3" == "$2" ]]; then echo "ok   $1"
 line() { sed -n "$1p" <<< "$frame"; }
 
 echo "── Kopfzeile"
-t "Kopf zählt nur Claude-Agents" "Claude Context · 4 Agents · alle 5s" "$(line 1)"
+t "Kopf zählt nur Claude-Agents" "Claude Context · 4 agents · every 5s" "$(line 1)"
 t "Leerzeile darunter"           ""                                   "$(line 2)"
 
 echo "── Zeilen, sortiert nach Auslastung absteigend, ohne Daten zuletzt"
 t "1. kritisch + veraltet" "w5:p2  ◑ Claude context Herd…  ████████░░  81% (68%) 💀  680k/1.0M ⧗" "$(line 3)"
 t "2. mittel"              "w4:p1  ◑ AEM Agent pilot       █████░░░░░  53% (44%)  440k/1.0M"      "$(line 4)"
 t "3. niedrig"             "w2:p1  ✳ herdr plugin session  █░░░░░░░░░  17% (14%)  140k/1.0M"      "$(line 5)"
-t "4. ohne Daten"          "w5:p1  ✳ Slack-Status setzen   — keine Daten"                          "$(line 6)"
+t "4. ohne Daten"          "w5:p1  ✳ Slack-Status setzen   — no data"                          "$(line 6)"
 t "kein Codex-Agent"       ""                                                                      "$(grep -c codex <<< "$frame" | tr -d ' ' | sed 's/^0$//')"
 t "genau 6 Zeilen"         "6"                                                                     "$(wc -l <<< "$frame" | tr -d ' ')"
 
@@ -50,13 +50,13 @@ t "dreistelliger Wert wird gepolstert" "w9:p1  ✳ kurz                  ░░�
    "$(METER_AGENT_LIST_CMD='cat fixtures/agent-list-one.json' bash meter-pane.sh --once | sed -n 3p)"
 
 echo "── Fehlerfälle"
-t "herdr nicht erreichbar" "Claude Context · herdr nicht erreichbar" \
+t "herdr nicht erreichbar" "Claude Context · herdr unreachable" \
    "$(METER_AGENT_LIST_CMD='false' bash meter-pane.sh --once | sed -n 1p)"
 t "Exit 0 trotz Fehler"    "0" \
    "$(METER_AGENT_LIST_CMD='false' bash meter-pane.sh --once >/dev/null 2>&1; echo $?)"
-t "Schrott-JSON"           "Claude Context · herdr nicht erreichbar" \
+t "Schrott-JSON"           "Claude Context · herdr unreachable" \
    "$(METER_AGENT_LIST_CMD='echo kaputt' bash meter-pane.sh --once | sed -n 1p)"
-t "keine Agents"           "Claude Context · keine Claude-Agents" \
+t "keine Agents"           "Claude Context · no Claude agents" \
    "$(METER_AGENT_LIST_CMD='cat fixtures/agent-list-empty.json' bash meter-pane.sh --once | sed -n 1p)"
 
 if (( fail )); then echo; echo "FEHLGESCHLAGEN"; else echo; echo "alle Tests grün"; fi

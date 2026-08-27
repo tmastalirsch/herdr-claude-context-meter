@@ -96,16 +96,16 @@ glyph_for_status() {
 render_frame() {
   local rows count=0
   if ! rows="$(collect)"; then
-    printf 'Claude Context · herdr nicht erreichbar\n'
+    printf 'Claude Context · herdr unreachable\n'
     return 0
   fi
   [[ -n "$rows" ]] && count="$(grep -c '' <<< "$rows")"
   if (( count == 0 )); then
-    printf 'Claude Context · keine Claude-Agents\n'
+    printf 'Claude Context · no Claude agents\n'
     return 0
   fi
-  local noun="Agents"; (( count == 1 )) && noun="Agent"
-  printf 'Claude Context · %d %s · alle %ss\n\n' "$count" "$noun" "$INTERVAL"
+  local noun="agents"; (( count == 1 )) && noun="agent"
+  printf 'Claude Context · %d %s · every %ss\n\n' "$count" "$noun" "$INTERVAL"
 
   local pane status title has usable raw tokens window stale meter
   while IFS=$'\t' read -r pane status title has usable raw tokens window stale; do
@@ -116,7 +116,7 @@ render_frame() {
       fi
       (( stale )) && meter="$meter ⧗"
     else
-      meter="— keine Daten"
+      meter="— no data"
     fi
     printf '%s  %s %s  %s\n' "$pane" "$(glyph_for_status "$status")" "$title" "$meter"
   done <<< "$rows"

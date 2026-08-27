@@ -4,7 +4,7 @@ A [herdr](https://herdr.dev) plugin that shows Claude Code's context usage as a 
 per session in the status line, and for all sessions at once in a herdr pane.
 
 ```
-Claude Context · 4 Agents · alle 5s
+Claude Context · 4 agents · every 5s
 
 w1:p1  ◑ api refactor              ██████░░░░  68% (57%)  570k/1.0M
 w2:p1  ◑ flaky test hunt           ██░░░░░░░░  20% (17%)  172k/1.0M
@@ -160,11 +160,9 @@ bash meter-pane.sh --once # one frame against the live herdr session
 - Values come from the Claude status line and refresh whenever Claude Code re-renders it.
   Finished or paused sessions are flagged with `⧗` after `METER_STALE` seconds rather
   than removed.
-- Sessions that have not rendered a status line yet show `— keine Daten`.
+- Sessions that have not rendered a status line yet show `— no data`.
 - The window size comes from `context_window.context_window_size`; without that field the
   row stays empty rather than guessing.
-- The pane's own labels are still German (`4 Agents · alle 5s`, `— keine Daten`), as the
-  sample output above shows. Only the surrounding docs are translated so far.
 
 ## License
 
